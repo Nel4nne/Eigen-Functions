@@ -7,6 +7,11 @@ from matplotlib import pyplot
 
 
 def _fill_matrix(omega_y: list, u_y: list) -> Matrix:
+    """
+    Заполнение матрицы для решения однородной системы
+    и нахождения 
+    """
+
     # Размерность матрицы
     matrix_dim = len(omega_y)
     # Матрица с единицами на главной диагонали
@@ -20,6 +25,10 @@ def _fill_matrix(omega_y: list, u_y: list) -> Matrix:
 
 
 def _calc_det(c: Matrix):
+    """
+    Подсчет определителя матрицы
+    """
+
     # Количество строк и столбцов
     dim_row, dim_col = c.shape
 
@@ -58,6 +67,10 @@ def _calc_det(c: Matrix):
 
 
 def _subs_value_in_matrix(c: Matrix, sub_symbol, value: float):
+    """
+    Подстановка значения value вместо символа sub_symbol во все
+    элементы матрицы
+    """
     dim_row, dim_col = c.shape
 
     if dim_row != dim_col:
@@ -74,6 +87,11 @@ def _subs_value_in_matrix(c: Matrix, sub_symbol, value: float):
 
 
 def _solve_linear_system(c: Matrix, b: Matrix) -> list[float]:
+    """
+    Решение системы линейных уравнений, задающейся матрицей 'c' и
+    столбцом свободных членов 'b'
+    """
+
     # Решаю систему, решение в последнем столбце
     c_augmented = c.row_join(b)
     # Решаю систему, решение в последнем столбце
@@ -86,6 +104,10 @@ def _solve_linear_system(c: Matrix, b: Matrix) -> list[float]:
 
 
 def _calc_eigen_function(omega_i: list, c_i: list[float]):
+    """
+    Подсчёт собственной функции
+    """
+
     # Будущая собственная функция
     u_i = 0
     dim = len(omega_i)
@@ -101,6 +123,10 @@ def _calc_eigen_function(omega_i: list, c_i: list[float]):
 
 
 def _calc_kernel(omega_y: list, u_y: list):
+    """
+    Подсчет конечного ядра
+    """
+
     K_x_y = 0
     dim = len(omega_y)
     for i in range(dim):
@@ -111,6 +137,18 @@ def _calc_kernel(omega_y: list, u_y: list):
 
 
 def _tab_func(func, symbol, arg_start: float, arg_end: float, n: int) -> tuple[list, list]:
+    """
+    Табуляция функции 'func' в пределах отрезка [arg_start, arg_end]
+    :param func: Выражение sympy по неизвестной 'symbol'
+    :param symbol: Символ sympy, являющийся неизвестной
+    :param arg_start: Начало отрезка табуляции
+    :param arg_end: Конец отрезка табуляции
+    :param n: На сколько частей разбить отрезок табуляции
+    :result: Два списка:
+        - список с точками табуляции
+        - список со значениями функции в точках
+    """
+
     arg_step: float = (arg_end - arg_start) / n
     arg: float = arg_start
     points: list[float] = []
